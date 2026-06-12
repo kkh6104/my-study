@@ -9,9 +9,9 @@ public class Quiz3 {
 		Scanner sc = new Scanner(System.in);
 		
 		System.out.print("소문자 입력: ");
-		String st = sc.next();
+		String a = sc.next();
 		
-		char ch = st.charAt(0);
+		char ch = a.charAt(0);
 		
 		System.out.println();
 		

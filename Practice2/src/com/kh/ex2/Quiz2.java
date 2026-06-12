@@ -6,17 +6,15 @@ public class Quiz2 {
 		
 		int a = 10;
 		int b = 20;
-		int c;
+		int x;
 		
-		System.out.printf("교환 전: a = %d, b = %d",a,b);
-		System.out.println();
+		System.out.printf("%-5s: a = %d, b = %d\n","교환 전", a, b);
 		
-		c = b;
+		x = b;
 		b = a;
-		a = c;
+		a = x;
 
-		System.out.printf("교환 후: a = %d, b = %d",a,b);
-		System.out.println();
+		System.out.printf("%-5s: a = %d, b = %d\n","교환 후", a, b);
 		
 	}
 	
