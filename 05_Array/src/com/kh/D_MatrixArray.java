@@ -38,7 +38,7 @@ public class D_MatrixArray {
 	
 	public static void main(String[] args) {
 
-		method1();
+		method2();
 	}
 
 	public static void method1() {
@@ -91,9 +91,70 @@ public class D_MatrixArray {
 	
 	
 	public static void method2() {
+		/*
+		 * 아래 문자열 데이터를 저장할 2차원 배열을 선언 및 생성하고
+		 * 각 위치에 값을 대입해보자.
+		 * 
+		 * "(0행 0열)""(0행 1열)" "(0행 2열)" 
+		 * "(1행 0열)""(1행 1열)" "(1행 2열)"
+		 * "(2행 0열)""(2행 1열)" "(2행 2열)"
+		 *
+		 * !! 체크 사항 !!
+		 * 1) 데이터가 어떤 타입인가? (자료형)
+		 * 2) 몇 개의 행이 필요한가? (패턴 분석)
+		 * 3) 한 행에 몇 개의 데이터를 저장할 것인가?
+		 */
 		
+		String[][] arr = new String[3][3];
 		
+		/* arr 배열의 현재 상태
+		 * 		null null null
+		 * 		null null null
+		 * 		null null null
+		 */
+		
+		// * 값 대입
+		// [1] 직접 인덱스를 지정하여 대입
+		arr[0][0] = "(0행 0열)";
+		arr[0][1] = "(0행 1열)";
+		arr[0][2] = "(0행 2열)";
+		
+		/* arr 배열의 현재 상태
+		 * 		"0행 0열" "0행1열" "0행1열"
+		 * 		null	 null 	 null
+		 * 		null 	 null 	 null
+		 */
+		
+		/*
+		for(int i = 0; i < arr[0].length ; i++) {
+			arr[0][i] = "(0행 " + i + "열)";
+		}
+		
+		for(int i = 1; i < arr[1].length ; i++) {
+			arr[1][i] = "(1행 " + i + "열)";
+		}
+		
+		for(int i = 2; i < arr[2].length ; i++) {
+			arr[2][i] = "(2행 " + i + "열)";
+		}
+			*/
+		
+		for(int row = 0; row < arr.length ; row++) {
+			for(int i = 0; i < arr[row].length ; i++) {
+				arr[row][i] = "("+ row +"행 " + i + "열)";
+			}
+		}
+		
+		// * 값 출력
+		
+		System.out.println();
+		
+		for(int row = 0; row < arr.length ; row++) {
+			for(int i = 0; i < arr[row].length ; i++) {
+				System.out.print(arr[row][i] + " ");
+			}
+			System.out.println();
+		}
 	}
-	
 	
 }
