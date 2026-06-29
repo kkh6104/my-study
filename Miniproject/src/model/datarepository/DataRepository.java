@@ -11,13 +11,14 @@ import model.User;
 import model.Dao.UserDataDAO;
 import model.exception.AgeLimitException;
 import model.exception.LackOfBalanceException;
+import model.exception.NotIdentifiedException;
 import model.interfaces.Animal;
 import model.interfaces.Humanities;
 import model.interfaces.Science;
 
 public class DataRepository {
 
-	User currentUser = new User();
+	User currentUser;
 	UserDataDAO udd = new UserDataDAO();
 	
 	private Content[] contents;
@@ -38,27 +39,21 @@ public class DataRepository {
 
 	public void register(String name, int age) {
 		memberCount = udd.loadMemberCount();
-		currentUser.setUserID(memberCount + 1);
 		udd.increase1MemberCount();
 		
-		currentUser.setName(name);
-		currentUser.setAge(age);
-		currentUser.setBalance(0);
+		this.currentUser = new User(memberCount+1, name, age, 0);
 		udd.register(currentUser.getUserID(), currentUser.getName(), currentUser.getAge(), currentUser.getBalance());
 		
 	}
 	
-	public User identify(int inputUserID)  throws NullPointerException {
+	public String identify(int inputUserID)  throws NotIdentifiedException {
 		
 		String rawData = udd.identify(inputUserID);
 		String[] temp = rawData.split(",");
 					
-		currentUser.setUserID(Integer.parseInt(temp[0]));
-		currentUser.setName(temp[1]) ;
-		currentUser.setAge(Integer.parseInt(temp[2]));
-		currentUser.setBalance(Integer.parseInt(temp[3]));
+		this.currentUser = new User(Integer.parseInt(temp[0]),temp[1],Integer.parseInt(temp[2]),Integer.parseInt(temp[3]));
 		
-		return currentUser;
+		return currentUser.getName();
 		
 	}
 	
@@ -141,7 +136,7 @@ public class DataRepository {
 			throw new AgeLimitException("연령 제한보다 어립니다.");
 		}
 
-		return selectedOne.getTitle();
+		return selectedOne.getTitle() + "를 재생하겠습니다.";
 
 	}
 

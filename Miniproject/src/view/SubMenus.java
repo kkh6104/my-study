@@ -100,7 +100,7 @@ public class SubMenus {
 					System.out.print("회원 아이디를 입력해주세요. : ");
 					try {
 						inputUserID = sc.nextInt();
-						c.identify(inputUserID);
+						System.out.println(c.identify(inputUserID));
 						break;
 					} catch (InputMismatchException e) {
 						System.out.println("숫자로 된 아이디를 입력해주세요.");
@@ -234,12 +234,8 @@ public class SubMenus {
 				continue;
 			}
 
-			try {
-				System.out.println(c.streaming(inputContetID) + "를 재생합니다.");
-				return;
-			} catch (LackOfBalanceException | AgeLimitException e) {
-				break;
-			}
+			c.streaming(inputContetID);
+			
 
 		}
 	}

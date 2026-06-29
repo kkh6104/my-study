@@ -4,6 +4,7 @@ import model.Content;
 import model.datarepository.DataRepository;
 import model.exception.AgeLimitException;
 import model.exception.LackOfBalanceException;
+import model.exception.NotIdentifiedException;
 
 public class Controller {
 
@@ -19,10 +20,12 @@ public class Controller {
 		return dr.getUserID();
 	}
 
-	public void identify(int inputUserID) throws NullPointerException {
-
-		dr.identify(inputUserID);
-
+	public String identify(int inputUserID) {
+		try {
+			return "어서오세요 " + dr.identify(inputUserID) + "고객님 환영합니다.";	
+		} catch (NotIdentifiedException e) {
+			return e.getMessage();
+		}
 	}
 
 	public Content[] showAllContentsList() {
@@ -40,8 +43,14 @@ public class Controller {
 		return dr.searchByEntertainer(keyWord);
 	}
 	
-	public String streaming(String inputContetID) throws LackOfBalanceException, AgeLimitException{
-		return dr.streaming(inputContetID);
+	public String streaming(String inputContetID) {
+		try {
+			   return (dr.streaming(inputContetID));
+		} catch (LackOfBalanceException e) {
+			return e.getMessage();
+		}catch(AgeLimitException e) {
+			return e.getMessage();
+		}
 	}
 	
 	public Content[] showAllMoviesList() {

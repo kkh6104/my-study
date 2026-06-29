@@ -9,6 +9,17 @@ public class User {
 
 	public User() {
 	}
+	
+	
+
+	public User(int userID, String name, int age, int balance) {
+		this.userID = userID;
+		this.name = name;
+		this.age = age;
+		this.balance = balance;
+	}
+
+
 
 	public int getAge() {
 		return age;
@@ -27,20 +38,24 @@ public class User {
 		return this.userID;
 	}
 
+
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+
 
 	public void setAge(int age) {
 		this.age = age;
 	}
 
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
+
 
 	public void setBalance(int balance) {
 		this.balance = balance;
 	}
+
+
 
 }

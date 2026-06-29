@@ -6,6 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import model.exception.NotIdentifiedException;
+
 public class UserDataDAO {
 
 	public int loadMemberCount() {
@@ -61,7 +63,7 @@ public class UserDataDAO {
 
 	}
 
-	public String identify(int inputID) throws NullPointerException {
+	public String identify(int inputID) throws NotIdentifiedException {
 
 		String[] temp;
 		String rawData = "";
@@ -70,8 +72,9 @@ public class UserDataDAO {
 			while (true) {
 
 				rawData = br.readLine();
-				if (rawData == null)
-					break;
+				if (rawData == null) {
+					throw new NotIdentifiedException("없는 회원 번호이거나 잘못입력하셨습니다.");
+				}
 				temp = (rawData).split(",");
 				if (Integer.parseInt(temp[0]) == inputID) {
 					break;
