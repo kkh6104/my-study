@@ -1,6 +1,6 @@
 package model;
 
-public class Movie extends Content {
+public class Movie extends Content implements Comparable<Movie>{
 
 	private double rating;
 
@@ -20,6 +20,11 @@ public class Movie extends Content {
 	public String toString() {
 		return String.format("제목 : %s, 컨텐츠 번호 : %s, 가격 : %d, 연령제한 : %d, 별점 : %f", title, contentID, price, ageLimit, rating);
 
+	}
+
+	@Override
+	public int compareTo(Movie o) {
+		return Double.compare(o.rating, this.rating);
 	}
 
 

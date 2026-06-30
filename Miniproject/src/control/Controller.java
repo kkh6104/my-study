@@ -11,21 +11,20 @@ public class Controller {
 	
 	DataRepository dr = new DataRepository();
 
-	public void register(String name, int age) {
-		dr.register(name, age);
+	public void register(String id, String name, int age) {
+		dr.register(id, name, age);
 	}
 
-	public int getUserID() {
-
-		return dr.getUserID();
-	}
-
-	public String identify(int inputUserID) {
+	public String identify(String inputUserID) {
 		try {
 			return "어서오세요 " + dr.identify(inputUserID) + "고객님 환영합니다.";	
 		} catch (NotIdentifiedException e) {
 			return e.getMessage();
 		}
+	}
+	
+	public String getUserID() {
+		return dr.getUserID();
 	}
 
 	public Content[] showAllContentsList() {

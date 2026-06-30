@@ -18,9 +18,9 @@ public class SubMenus {
 	public void identificationMenu() {
 
 		char yn, ynUser, ynResister;
-		String name = "", input = "";
+		String name = "", input = "", UserID = "";
 		int age = 0;
-		int inputUserID = 0;
+		
 
 		System.out.println("식별 메뉴 시작");
 		System.out.println("=".repeat(15));
@@ -62,6 +62,16 @@ public class SubMenus {
 
 				if (ynResister == 'y' || ynResister == 'Y') {
 					while (true) {
+						System.out.print("아이디를 입력해주세요 : ");
+						UserID = sc.nextLine();
+						try {
+							UserID = checkBlank(UserID);
+							break;
+						} catch (BlankException e) {
+							continue;
+						}
+					}
+					while (true) {
 						System.out.print("이름을 입력해주세요 : ");
 						name = sc.nextLine();
 						try {
@@ -84,7 +94,7 @@ public class SubMenus {
 						}
 					}
 
-					c.register(name, age);
+					c.register(UserID, name, age);
 
 					System.out.println("회원님의 회원 아이디는 " + c.getUserID() + "입니다.");
 
@@ -99,8 +109,8 @@ public class SubMenus {
 				while (true) {
 					System.out.print("회원 아이디를 입력해주세요. : ");
 					try {
-						inputUserID = sc.nextInt();
-						System.out.println(c.identify(inputUserID));
+						UserID = sc.nextLine();
+						System.out.println(c.identify(UserID));
 						break;
 					} catch (InputMismatchException e) {
 						System.out.println("숫자로 된 아이디를 입력해주세요.");

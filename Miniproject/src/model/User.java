@@ -1,8 +1,10 @@
 package model;
 
-public class User {
+import java.io.Serializable;
 
-	private int userID;
+public class User implements Serializable {
+
+	
 	private String name;
 	private int age;
 	private int balance;
@@ -12,8 +14,8 @@ public class User {
 	
 	
 
-	public User(int userID, String name, int age, int balance) {
-		this.userID = userID;
+	public User(String name, int age, int balance) {
+		
 		this.name = name;
 		this.age = age;
 		this.balance = balance;
@@ -33,11 +35,7 @@ public class User {
 		return name;
 	}
 
-	public int getUserID() {
-
-		return this.userID;
-	}
-
+	
 
 
 	public void setName(String name) {

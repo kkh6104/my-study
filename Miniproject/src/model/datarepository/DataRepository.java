@@ -1,5 +1,7 @@
 package model.datarepository;
 
+import java.util.Map;
+
 import model.AnimalDocu;
 import model.Content;
 import model.Documentary;
@@ -11,20 +13,24 @@ import model.User;
 import model.Dao.UserDataDAO;
 import model.exception.AgeLimitException;
 import model.exception.LackOfBalanceException;
+import model.exception.NotFoundFileException;
 import model.exception.NotIdentifiedException;
+import model.exception.WrongDataException;
 import model.interfaces.Animal;
 import model.interfaces.Humanities;
 import model.interfaces.Science;
 
 public class DataRepository {
-
-	User currentUser;
-	UserDataDAO udd = new UserDataDAO();
+	
+	private Map<String, User> users;
+	private User currentUser;
+	private UserDataDAO udd = new UserDataDAO();
+	private String userID ="";
 	
 	private Content[] contents;
-	private int memberCount;
 
-	public DataRepository() {
+	public DataRepository() throws NotFoundFileException, WrongDataException {
+		this.users = udd.loadUsers();
 		this.contents = new Content[9];
 		this.contents[0] = new Entertainment("알던 형님", "10001", 1500, 15, "유호동, 서수근, 이장훈");
 		this.contents[1] = new Entertainment("놀면 뭐혀", "10002", 1000, 12, "강재석, 허우재, 주경환");
@@ -37,30 +43,27 @@ public class DataRepository {
 		this.contents[8] = new ScienceDocu("우주의 비밀", "30003", 700, 9);
 	}
 
-	public void register(String name, int age) {
-		memberCount = udd.loadMemberCount();
-		udd.increase1MemberCount();
-		
-		this.currentUser = new User(memberCount+1, name, age, 0);
-		udd.register(currentUser.getUserID(), currentUser.getName(), currentUser.getAge(), currentUser.getBalance());
-		
-	}
-	
-	public String identify(int inputUserID)  throws NotIdentifiedException {
-		
-		String rawData = udd.identify(inputUserID);
-		String[] temp = rawData.split(",");
-					
-		this.currentUser = new User(Integer.parseInt(temp[0]),temp[1],Integer.parseInt(temp[2]),Integer.parseInt(temp[3]));
-		
-		return currentUser.getName();
+	public void register(String id, String name, int age) {
+		this.userID = id; 
+		this.currentUser = new User(name, age, 0);
+		users.put(id, currentUser);
+		udd.uploadUsers(users);
 		
 	}
 	
-
-	public int getUserID() {
-
-		return currentUser.getUserID();
+	public String identify(String inputUserID)  throws NotIdentifiedException {
+		this.userID = inputUserID;
+		if(users.containsKey(inputUserID)) {
+			currentUser = users.get(inputUserID);
+			return currentUser.getName();
+		} else {
+			throw new NotIdentifiedException("없는 아이디 입니다.");	
+		}
+		
+	}
+	
+	public String getUserID() {
+		return this.userID;
 	}
 	
 	public String getName() {
@@ -262,28 +265,28 @@ public class DataRepository {
 	
 	public String showMyInfo() {
 		return String.format("회원ID : %s, 이름 : %s, 나이 : %d, 잔액 : %d"
-						,currentUser.getUserID(),  currentUser.getName()
+						,this.userID,  currentUser.getName()
 						,currentUser.getAge(), currentUser.getBalance());
 		
 	}
 	
-	public void saveUserData() {
-		udd.saveUserData(currentUser.getUserID(),currentUser.getName(),currentUser.getAge(),currentUser.getBalance());
-	}
 	
 	public void reName(String name) {
 		currentUser.setName(name);
-		saveUserData();
+		users.put(this.userID, currentUser);
+		udd.uploadUsers(users);
 	}
 	
 	public void reAge(int age) {
 		currentUser.setAge(age);
-		saveUserData();
+		users.put(this.userID, currentUser);
+		udd.uploadUsers(users);
 	}
 	
 	public void topup(int money) {
 		currentUser.setBalance(currentUser.getBalance() + money);
-		saveUserData();
+		users.put(this.userID, currentUser);
+		udd.uploadUsers(users);
 	}
 	
 	
