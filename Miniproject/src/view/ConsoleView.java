@@ -106,10 +106,10 @@ public class ConsoleView {
 						continue;
 					}
 
-					if (yn == 'y' || yn == 'Y')
+					if (yn == 'y' || yn == 'Y') {
 						System.out.println("프로그램을 종료합니다.");
 						System.exit(0);
-
+					}
 					continue;
 				}
 
@@ -138,6 +138,7 @@ public class ConsoleView {
 			System.out.println("2. 출연 연예인으로 검색 하기");
 			System.out.println("3. 시청 하기");
 			System.out.println("0. 돌아가기");
+			System.out.println("============");
 			System.out.print("원하시는 메뉴의 번호를 입력하세요: ");
 
 			menu = takeMenu();
@@ -173,6 +174,7 @@ public class ConsoleView {
 			System.out.println("2. 별점별 목록 정렬 하기");
 			System.out.println("3. 시청 하기");
 			System.out.println("0. 돌아가기");
+			System.out.println("============");
 			System.out.print("원하시는 메뉴의 번호를 입력하세요: ");
 
 			menu = takeMenu();
@@ -210,6 +212,7 @@ public class ConsoleView {
 			System.out.println("2. 종류별 목록 보기");
 			System.out.println("3. 시청 하기");
 			System.out.println("0. 돌아가기");
+			System.out.println("============");
 			System.out.print("원하시는 메뉴의 번호를 입력하세요: ");
 
 			menu = takeMenu();
@@ -241,12 +244,14 @@ public class ConsoleView {
 	public void userMenu() {
 		int menu;
 		while (true) {
+			System.out.println();
 			System.out.println("=== 유저 메뉴 ===");
 			System.out.println("1. 나의 정보 조회");
 			System.out.println("2. 나의 정보 수정");
 			System.out.println("3. 충전 하기");
 			System.out.println("4. 탈퇴하기");
 			System.out.println("0. 돌아가기");
+			System.out.println("============");
 			System.out.print("원하시는 메뉴의 번호를 입력하세요: ");
 
 			menu = takeMenu();
@@ -416,22 +421,24 @@ public class ConsoleView {
 	public void streaming(int min, int max, String type) {
 		String contentID;
 		while (true) {
+			System.out.println("====================");
 			System.out.print("보려는 컨텐츠의 번호를 입력해주세요: ");
+			System.out.println("====================");
 			contentID = sc.nextLine();
 			try {
 				checkBlank(contentID);
 			} catch (BlankException e) {
 				System.out.println(e.getMessage());
-				continue;
+				return;
 			}
 			try {
-			if(min > Integer.parseInt(contentID) || max >= Integer.parseInt(contentID) ) {
+			if(!(min <= Integer.parseInt(contentID) && max > Integer.parseInt(contentID) )) {
 				System.out.printf("%s 컨텐츠 번호는 %d이상 %d미만입니다.\n",type,min,max);
-				continue;
+				return;
 			}
 			}catch(NumberFormatException e) {
 				System.out.println("숫자를 입력해주세요.");
-				continue;
+				return;
 			}
 			System.out.println(c.streaming(contentID));
 			break;
